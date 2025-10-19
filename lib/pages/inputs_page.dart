@@ -120,35 +120,96 @@ class _InputsPageState extends State<InputsPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                TextField(
-                  controller: _passwordController,
-                  obscureText: !_isPasswordVisible,
-                  decoration: InputDecoration(
-                    labelText: 'رمز عبور',
-                    hintText: 'رمز عبور خود را وارد کنید',
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _passwordController,
+                    obscureText: !_isPasswordVisible,
+                    style: const TextStyle(
+                      fontFamily: 'Iranyekan',
+                      fontSize: 16,
                     ),
-                    border: const OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: 'رمز عبور',
+                      hintText: 'رمز عبور خود را وارد کنید',
+                      prefixIcon: const Icon(Icons.lock, color: Color(0xFF6B7280)),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          color: const Color(0xFF6B7280),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      labelStyle: const TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF6B7280),
+                      ),
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF9CA3AF),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
-                TextField(
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    labelText: 'شماره تلفن',
-                    hintText: '09123456789',
-                    prefixIcon: Icon(Icons.phone),
-                    border: OutlineInputBorder(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
+                    style: const TextStyle(
+                      fontFamily: 'Iranyekan',
+                      fontSize: 16,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'شماره تلفن',
+                      hintText: '09123456789',
+                      prefixIcon: const Icon(Icons.phone, color: Color(0xFF6B7280)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      labelStyle: const TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF6B7280),
+                      ),
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF9CA3AF),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -156,98 +217,173 @@ class _InputsPageState extends State<InputsPage> {
 
             const SizedBox(height: 32),
 
-            // Checkboxes
-            _buildSectionTitle('چک باکس‌ها'),
+            // Modern Checkboxes
+            _buildSectionTitle('چک باکس‌های مدرن'),
             const SizedBox(height: 16),
-            Column(
-              children: [
-                CheckboxListTile(
-                  title: const Text('مرا به خاطر بسپار'),
-                  value: _rememberMe,
-                  onChanged: (value) {
-                    setState(() {
-                      _rememberMe = value ?? false;
-                    });
-                  },
-                ),
-                CheckboxListTile(
-                  title: const Text('قوانین و مقررات را می‌پذیرم'),
-                  subtitle: const Text('برای ادامه باید قوانین را بپذیرید'),
-                  value: false,
-                  onChanged: (value) {},
-                ),
-                CheckboxListTile(
-                  title: const Text('اعلان‌ها را دریافت کنم'),
-                  value: true,
-                  onChanged: (value) {},
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 32),
-
-            // Radio Buttons
-            _buildSectionTitle('رادیو باتن‌ها'),
-            const SizedBox(height: 16),
-            Column(
-              children: [
-                RadioListTile<String>(
-                  title: const Text('مرد'),
-                  value: 'مرد',
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value ?? '';
-                    });
-                  },
-                ),
-                RadioListTile<String>(
-                  title: const Text('زن'),
-                  value: 'زن',
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value ?? '';
-                    });
-                  },
-                ),
-                RadioListTile<String>(
-                  title: const Text('سایر'),
-                  value: 'سایر',
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value ?? '';
-                    });
-                  },
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 32),
-
-            // Dropdown
-            _buildSectionTitle('لیست کشویی'),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              value: _selectedCity.isEmpty ? null : _selectedCity,
-              decoration: const InputDecoration(
-                labelText: 'شهر',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.location_city),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
-              items: const [
-                DropdownMenuItem(value: 'تهران', child: Text('تهران')),
-                DropdownMenuItem(value: 'مشهد', child: Text('مشهد')),
-                DropdownMenuItem(value: 'اصفهان', child: Text('اصفهان')),
-                DropdownMenuItem(value: 'شیراز', child: Text('شیراز')),
-                DropdownMenuItem(value: 'تبریز', child: Text('تبریز')),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  _selectedCity = value ?? '';
-                });
-              },
+              child: Column(
+                children: [
+                  _buildModernCheckbox(
+                    'مرا به خاطر بسپار',
+                    _rememberMe,
+                    (value) {
+                      setState(() {
+                        _rememberMe = value ?? false;
+                      });
+                    },
+                  ),
+                  const Divider(height: 1),
+                  _buildModernCheckbox(
+                    'قوانین و مقررات را می‌پذیرم',
+                    false,
+                    (value) {},
+                    subtitle: 'برای ادامه باید قوانین را بپذیرید',
+                  ),
+                  const Divider(height: 1),
+                  _buildModernCheckbox(
+                    'اعلان‌ها را دریافت کنم',
+                    true,
+                    (value) {},
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 32),
+
+            // Modern Radio Buttons
+            _buildSectionTitle('رادیو باتن‌های مدرن'),
+            const SizedBox(height: 16),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  _buildModernRadio('مرد', 'مرد'),
+                  const Divider(height: 1),
+                  _buildModernRadio('زن', 'زن'),
+                  const Divider(height: 1),
+                  _buildModernRadio('سایر', 'سایر'),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 32),
+
+            // Modern Dropdown
+            _buildSectionTitle('لیست کشویی مدرن'),
+            const SizedBox(height: 16),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: DropdownButtonFormField<String>(
+                value: _selectedCity.isEmpty ? null : _selectedCity,
+                style: const TextStyle(
+                  fontFamily: 'Iranyekan',
+                  fontSize: 16,
+                  color: Color(0xFF111827),
+                ),
+                decoration: InputDecoration(
+                  labelText: 'شهر',
+                  prefixIcon: const Icon(Icons.location_city, color: Color(0xFF6B7280)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  labelStyle: const TextStyle(
+                    fontFamily: 'Iranyekan',
+                    color: Color(0xFF6B7280),
+                  ),
+                ),
+                items: const [
+                  DropdownMenuItem(
+                    value: 'تهران',
+                    child: Text(
+                      'تهران',
+                      style: TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 'مشهد',
+                    child: Text(
+                      'مشهد',
+                      style: TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 'اصفهان',
+                    child: Text(
+                      'اصفهان',
+                      style: TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 'شیراز',
+                    child: Text(
+                      'شیراز',
+                      style: TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: 'تبریز',
+                    child: Text(
+                      'تبریز',
+                      style: TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCity = value ?? '';
+                  });
+                },
+              ),
             ),
 
             const SizedBox(height: 32),
@@ -350,36 +486,57 @@ class _InputsPageState extends State<InputsPage> {
 
             const SizedBox(height: 32),
 
-            // Date Picker
+            // Modern Date Picker
             _buildSectionTitle('انتخاب تاریخ'),
             const SizedBox(height: 16),
-            InkWell(
-              onTap: () async {
-                final date = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2030),
-                );
-                if (date != null) {
-                  // Handle selected date
-                }
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.calendar_today),
-                    SizedBox(width: 12),
-                    Text('انتخاب تاریخ تولد'),
-                    Spacer(),
-                    Icon(Icons.arrow_drop_down),
-                  ],
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: InkWell(
+                onTap: () async {
+                  final date = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2030),
+                  );
+                  if (date != null) {
+                    // Handle selected date
+                  }
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.transparent),
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.calendar_today, color: Color(0xFF6B7280)),
+                      SizedBox(width: 12),
+                      Text(
+                        'انتخاب تاریخ تولد',
+                        style: TextStyle(
+                          fontFamily: 'Iranyekan',
+                          fontSize: 16,
+                          color: Color(0xFF9CA3AF),
+                        ),
+                      ),
+                      Spacer(),
+                      Icon(Icons.arrow_drop_down, color: Color(0xFF6B7280)),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -407,13 +564,99 @@ class _InputsPageState extends State<InputsPage> {
     );
   }
 
+  Widget _buildModernRadio(String title, String value) {
+    final isSelected = _selectedGender == value;
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      leading: Container(
+        width: 24,
+        height: 24,
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFD4AF37) : Colors.white,
+          border: Border.all(
+            color: isSelected ? const Color(0xFFD4AF37) : const Color(0xFFD1D5DB),
+            width: 2,
+          ),
+          shape: BoxShape.circle,
+        ),
+        child: isSelected
+            ? const Icon(
+                Icons.circle,
+                color: Colors.white,
+                size: 12,
+              )
+            : null,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontFamily: 'Iranyekan',
+          fontWeight: FontWeight.w500,
+          fontSize: 16,
+          color: Color(0xFF111827),
+        ),
+      ),
+      onTap: () {
+        setState(() {
+          _selectedGender = value;
+        });
+      },
+    );
+  }
+
+  Widget _buildModernCheckbox(String title, bool value, ValueChanged<bool?> onChanged, {String? subtitle}) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      leading: Container(
+        width: 24,
+        height: 24,
+        decoration: BoxDecoration(
+          color: value ? const Color(0xFFD4AF37) : Colors.white,
+          border: Border.all(
+            color: value ? const Color(0xFFD4AF37) : const Color(0xFFD1D5DB),
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: value
+            ? const Icon(
+                Icons.check,
+                color: Colors.white,
+                size: 16,
+              )
+            : null,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontFamily: 'Iranyekan',
+          fontWeight: FontWeight.w500,
+          fontSize: 16,
+          color: Color(0xFF111827),
+        ),
+      ),
+      subtitle: subtitle != null
+          ? Text(
+              subtitle,
+              style: const TextStyle(
+                fontFamily: 'Iranyekan',
+                fontSize: 12,
+                color: Color(0xFF6B7280),
+              ),
+            )
+          : null,
+      onTap: () => onChanged(!value),
+    );
+  }
+
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
       style: const TextStyle(
+        fontFamily: 'Iranyekan',
         fontSize: 18,
         fontWeight: FontWeight.bold,
-        color: Colors.black87,
+        color: Color(0xFF111827),
       ),
     );
   }
