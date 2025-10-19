@@ -26,8 +26,8 @@ class _InputsPageState extends State<InputsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('ورودی‌ها'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -39,24 +39,84 @@ class _InputsPageState extends State<InputsPage> {
             const SizedBox(height: 16),
             Column(
               children: [
-                TextField(
-                  controller: _textController,
-                  decoration: const InputDecoration(
-                    labelText: 'نام کامل',
-                    hintText: 'نام و نام خانوادگی خود را وارد کنید',
-                    prefixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _textController,
+                    style: const TextStyle(
+                      fontFamily: 'Iranyekan',
+                      fontSize: 16,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'نام کامل',
+                      hintText: 'نام و نام خانوادگی خود را وارد کنید',
+                      prefixIcon: const Icon(Icons.person, color: Color(0xFF6B7280)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      labelStyle: const TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF6B7280),
+                      ),
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF9CA3AF),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
-                TextField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    labelText: 'ایمیل',
-                    hintText: 'مثال@ایمیل.کام',
-                    prefixIcon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    style: const TextStyle(
+                      fontFamily: 'Iranyekan',
+                      fontSize: 16,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'ایمیل',
+                      hintText: 'مثال@ایمیل.کام',
+                      prefixIcon: const Icon(Icons.email, color: Color(0xFF6B7280)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      labelStyle: const TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF6B7280),
+                      ),
+                      hintStyle: const TextStyle(
+                        fontFamily: 'Iranyekan',
+                        color: Color(0xFF9CA3AF),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),

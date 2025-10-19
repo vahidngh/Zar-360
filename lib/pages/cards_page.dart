@@ -12,9 +12,9 @@ class _CardsPageState extends State<CardsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('محصولات طلا و جواهر'),
-        backgroundColor: const Color(0xFF1A1A1A),
-        foregroundColor: const Color(0xFFD4AF37),
+        title: const Text('محصولات'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -26,22 +26,15 @@ class _CardsPageState extends State<CardsPage> {
             const SizedBox(height: 16),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFFD4AF37),
-                    const Color(0xFFB8860B),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(16),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFD4AF37).withOpacity(0.3),
-                    blurRadius: 15,
-                    offset: const Offset(0, 8),
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 20,
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
@@ -56,38 +49,41 @@ class _CardsPageState extends State<CardsPage> {
                           Text(
                             'قیمت طلا',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Iranyekan',
+                              color: Color(0xFF111827),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             'هر گرم',
                             style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 12,
+                              fontFamily: 'Iranyekan',
+                              color: Color(0xFF6B7280),
+                              fontSize: 14,
                             ),
                           ),
                         ],
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFFD4AF37).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Text(
                           '۲,۸۵۰,۰۰۰',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                            fontFamily: 'Iranyekan',
+                            color: Color(0xFFD4AF37),
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
@@ -401,26 +397,33 @@ class _CardsPageState extends State<CardsPage> {
 
   Widget _buildPriceInfo(String title, String price) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(8),
+        color: const Color(0xFFF9FAFB),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: const Color(0xFFE5E7EB),
+          width: 1,
+        ),
       ),
       child: Column(
         children: [
           Text(
             title,
             style: const TextStyle(
-              color: Colors.white70,
+              fontFamily: 'Iranyekan',
+              color: Color(0xFF6B7280),
               fontSize: 12,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text(
             price,
             style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
+              fontFamily: 'Iranyekan',
+              color: Color(0xFF111827),
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -430,134 +433,132 @@ class _CardsPageState extends State<CardsPage> {
   }
 
   Widget _buildJewelryProductCard(String title, String type, String weight, String price, IconData icon, Color color) {
-    return Card(
-      elevation: 8,
-      shadowColor: color.withOpacity(0.3),
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          gradient: LinearGradient(
-            colors: [
-              Colors.white,
-              color.withOpacity(0.05),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-          border: Border.all(
-            color: color.withOpacity(0.3),
-            width: 1,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Product Image Area
-            Expanded(
-              flex: 3,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: color.withOpacity(0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        icon,
-                        size: 40,
-                        color: color,
-                      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Product Image Area
+          Expanded(
+            flex: 3,
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.05),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: color.withOpacity(0.1),
+                      shape: BoxShape.circle,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      type,
-                      style: TextStyle(
-                        color: color,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    child: Icon(
+                      icon,
+                      size: 32,
+                      color: color,
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    type,
+                    style: TextStyle(
+                      fontFamily: 'Iranyekan',
+                      color: color,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
             ),
-            // Product Details
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Color(0xFF1A1A1A),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+          ),
+          // Product Details
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontFamily: 'Iranyekan',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Color(0xFF111827),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'وزن: $weight',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 11,
-                      ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'وزن: $weight',
+                    style: const TextStyle(
+                      fontFamily: 'Iranyekan',
+                      color: Color(0xFF6B7280),
+                      fontSize: 12,
                     ),
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          price,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: color,
-                            fontSize: 14,
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            price,
+                            style: TextStyle(
+                              fontFamily: 'Iranyekan',
+                              fontWeight: FontWeight.bold,
+                              color: color,
+                              fontSize: 16,
+                            ),
                           ),
+                          const Text(
+                            'تومان',
+                            style: TextStyle(
+                              fontFamily: 'Iranyekan',
+                              color: Color(0xFF9CA3AF),
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: color.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: color.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Icon(
-                            Icons.favorite_border,
-                            color: color,
-                            size: 16,
-                          ),
+                        child: Icon(
+                          Icons.favorite_border,
+                          color: color,
+                          size: 16,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'تومان',
-                      style: TextStyle(
-                        color: Colors.grey[500],
-                        fontSize: 10,
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

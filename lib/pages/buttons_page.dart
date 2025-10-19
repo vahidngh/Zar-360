@@ -14,9 +14,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('دکمه‌های طلا فروشی'),
-        backgroundColor: const Color(0xFF1A1A1A),
-        foregroundColor: const Color(0xFFD4AF37),
+        title: const Text('دکمه‌ها'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -189,24 +189,22 @@ class _ButtonsPageState extends State<ButtonsPage> {
 
             const SizedBox(height: 32),
 
-            // Jewelry Action Buttons
-            _buildSectionTitle('دکمه‌های عملیات طلا فروشی'),
+            // Modern Action Buttons
+            _buildSectionTitle('دکمه‌های عملیات'),
             const SizedBox(height: 16),
             Column(
               children: [
-                // Add to Cart Button
+                // Primary Button
                 Container(
                   width: double.infinity,
-                  height: 55,
+                  height: 56,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFD4AF37), Color(0xFFB8860B)],
-                    ),
-                    borderRadius: BorderRadius.circular(12),
+                    color: const Color(0xFFD4AF37),
+                    borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
                         color: const Color(0xFFD4AF37).withOpacity(0.3),
-                        blurRadius: 8,
+                        blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
                     ],
@@ -214,17 +212,18 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                       onTap: () {},
                       child: const Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.shopping_cart, color: Colors.white),
+                            Icon(Icons.shopping_cart, color: Colors.white, size: 20),
                             SizedBox(width: 8),
                             Text(
                               'افزودن به سبد خرید',
                               style: TextStyle(
+                                fontFamily: 'Iranyekan',
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -237,30 +236,31 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                // Buy Now Button
+                // Secondary Button
                 Container(
                   width: double.infinity,
-                  height: 55,
+                  height: 56,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF1A1A1A),
-                    border: Border.all(color: const Color(0xFFD4AF37), width: 2),
-                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
+                    border: Border.all(color: const Color(0xFFE5E7EB), width: 1),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                       onTap: () {},
                       child: const Center(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.flash_on, color: Color(0xFFD4AF37)),
+                            Icon(Icons.flash_on, color: Color(0xFF111827), size: 20),
                             SizedBox(width: 8),
                             Text(
                               'خرید فوری',
                               style: TextStyle(
-                                color: Color(0xFFD4AF37),
+                                fontFamily: 'Iranyekan',
+                                color: Color(0xFF111827),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
@@ -272,13 +272,12 @@ class _ButtonsPageState extends State<ButtonsPage> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                // Wishlist Button
+                // Tertiary Button
                 Container(
                   width: double.infinity,
-                  height: 50,
+                  height: 48,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: const Color(0xFFC0C0C0), width: 1),
+                    color: const Color(0xFFF9FAFB),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Material(
@@ -290,12 +289,13 @@ class _ButtonsPageState extends State<ButtonsPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.favorite_border, color: Color(0xFFC0C0C0)),
+                            Icon(Icons.favorite_border, color: Color(0xFF6B7280), size: 18),
                             SizedBox(width: 8),
                             Text(
                               'افزودن به علاقه‌مندی‌ها',
                               style: TextStyle(
-                                color: Color(0xFF1A1A1A),
+                                fontFamily: 'Iranyekan',
+                                color: Color(0xFF6B7280),
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                               ),
