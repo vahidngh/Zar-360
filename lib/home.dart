@@ -5,6 +5,9 @@ import 'package:zar360/pages/navigation_page.dart';
 import 'package:zar360/pages/cards_page.dart';
 import 'package:zar360/pages/lists_page.dart';
 import 'package:zar360/pages/dialogs_page.dart';
+import 'package:zar360/pages/bottom_navigation_page.dart';
+import 'package:zar360/pages/buttons_variations_page.dart';
+import 'package:zar360/pages/product_buttons_page.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -256,6 +259,36 @@ class _HomeState extends State<Home> {
                   () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const DialogsPage()),
+                  ),
+                ),
+                _buildJewelryCategoryCard(
+                  context,
+                  'ناوبری پایین',
+                  Icons.navigation,
+                  const Color(0xFFD4AF37),
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BottomNavigationPage()),
+                  ),
+                ),
+                _buildJewelryCategoryCard(
+                  context,
+                  'انواع دکمه‌ها',
+                  Icons.touch_app,
+                  const Color(0xFFC0C0C0),
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ButtonsVariationsPage()),
+                  ),
+                ),
+                _buildJewelryCategoryCard(
+                  context,
+                  'دکمه‌های محصول',
+                  Icons.shopping_bag,
+                  const Color(0xFFD4AF37),
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ProductButtonsPage()),
                   ),
                 ),
               ],
