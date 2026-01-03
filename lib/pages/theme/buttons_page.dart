@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ButtonsPage extends StatefulWidget {
   const ButtonsPage({super.key});
@@ -212,9 +213,9 @@ class _ButtonsPageState extends State<ButtonsPage> {
                       ? const SizedBox(
                           width: 20,
                           height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          child: SpinKitFoldingCube(
+                            color: Colors.white,
+                            size: 20.0,
                           ),
                         )
                       : const Text('در حال بارگذاری'),

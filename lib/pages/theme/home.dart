@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:zar360/pages/buttons_page.dart';
-import 'package:zar360/pages/inputs_page.dart';
-import 'package:zar360/pages/navigation_page.dart';
-import 'package:zar360/pages/cards_page.dart';
-import 'package:zar360/pages/lists_page.dart';
-import 'package:zar360/pages/dialogs_page.dart';
-import 'package:zar360/pages/bottom_navigation_page.dart';
-import 'package:zar360/pages/buttons_variations_page.dart';
-import 'package:zar360/pages/product_buttons_page.dart';
+import 'package:zar360/pages/theme/buttons_page.dart';
+import 'package:zar360/pages/theme/inputs_page.dart';
+import 'package:zar360/pages/theme/navigation_page.dart';
+import 'package:zar360/pages/theme/cards_page.dart';
+import 'package:zar360/pages/theme/lists_page.dart';
+import 'package:zar360/pages/theme/dialogs_page.dart';
+import 'package:zar360/pages/theme/bottom_navigation_page.dart';
+import 'package:zar360/pages/theme/buttons_variations_page.dart';
+import 'package:zar360/pages/theme/product_buttons_page.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

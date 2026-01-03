@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.zar360"
+    namespace "ir.zar360.maaher"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -42,7 +42,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.zar360"
+        applicationId "ir.zar360.maaher"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
@@ -50,12 +50,20 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
+    signingConfigs {
+        release {
+            keyAlias 'dena360-app-key'
+            keyPassword 'aNh41tDe84hvKCYt'
+            storeFile file('/Users/vahidnaghash/Documents/key/dena/dena360.jks')
+            storePassword 'aNh41tDe84hvKCYt'
+        }
+    }
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+
         }
     }
 }
@@ -64,4 +72,7 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation files('libs/classes-2.1.17.jar')
+}
+

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../theme/app_theme.dart';
 
 class DialogsPage extends StatefulWidget {
   const DialogsPage({super.key});
@@ -590,9 +592,12 @@ class _DialogsPageState extends State<DialogsPage> {
       builder: (context) => const AlertDialog(
         content: Row(
           children: [
-            CircularProgressIndicator(),
-            SizedBox(width: 16),
-            Text('در حال بارگذاری...'),
+            const SpinKitFoldingCube(
+              color: AppColors.gold,
+              size: 24.0,
+            ),
+            const SizedBox(width: 16),
+            const Text('در حال بارگذاری...'),
           ],
         ),
       ),
@@ -610,7 +615,10 @@ class _DialogsPageState extends State<DialogsPage> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const CircularProgressIndicator(),
+            const SpinKitFoldingCube(
+              color: AppColors.gold,
+              size: 40.0,
+            ),
             const SizedBox(height: 16),
             const Text('در حال بارگذاری...'),
             const SizedBox(height: 16),
@@ -637,8 +645,9 @@ class _DialogsPageState extends State<DialogsPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+              const SpinKitFoldingCube(
+                color: Colors.blue,
+                size: 40.0,
               ),
               const SizedBox(height: 16),
               const Text(

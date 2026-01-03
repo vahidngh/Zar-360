@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:zar360/home.dart';
+import 'package:zar360/pages/splash_screen.dart';
+import 'package:zar360/pages/login_page.dart';
+import 'package:zar360/theme/app_theme.dart';
 
-void main() {
+// Global Navigator Key برای دسترسی به Navigator از هر جا
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -15,17 +21,17 @@ class MyApp extends StatelessWidget {
       title: 'سیستم طراحی زر۳۶۰',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFD4AF37), // طلایی
+          seedColor: AppColors.gold, // طلایی
           brightness: Brightness.light,
-          primary: const Color(0xFFD4AF37), // طلایی اصلی
-          secondary: const Color(0xFF6B7280), // خاکستری متوسط
-          surface: const Color(0xFFFFFFFF), // سفید
-          background: const Color(0xFFF9FAFB), // خاکستری خیلی روشن
-          error: const Color(0xFFEF4444), // قرمز روشن
-          onPrimary: const Color(0xFFFFFFFF),
-          onSecondary: const Color(0xFFFFFFFF),
-          onSurface: const Color(0xFF111827), // مشکی
-          onBackground: const Color(0xFF111827), // مشکی
+          primary: AppColors.gold, // طلایی اصلی
+          secondary: AppColors.textSecondary, // خاکستری متوسط
+          surface: AppColors.white, // سفید
+          background: AppColors.background, // خاکستری خیلی روشن
+          error: AppColors.error, // قرمز روشن
+          onPrimary: AppColors.white,
+          onSecondary: AppColors.white,
+          onSurface: AppColors.textPrimary, // مشکی
+          onBackground: AppColors.textPrimary, // مشکی
         ),
         useMaterial3: true,
         fontFamily: 'Iranyekan',
@@ -33,12 +39,12 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
           elevation: 0,
           backgroundColor: Colors.transparent,
-          foregroundColor: Color(0xFF111827),
+          foregroundColor: AppColors.textPrimary,
           titleTextStyle: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.bold,
             fontSize: 18,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
         ),
         cardTheme: CardTheme(
@@ -47,12 +53,12 @@ class MyApp extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          color: Colors.white,
+          color: AppColors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFD4AF37),
-            foregroundColor: Colors.white,
+            backgroundColor: AppColors.gold,
+            foregroundColor: AppColors.white,
             elevation: 0,
             shadowColor: Colors.transparent,
             shape: RoundedRectangleBorder(
@@ -70,73 +76,73 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.bold,
             fontSize: 32,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           displayMedium: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.bold,
             fontSize: 28,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           displaySmall: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.bold,
             fontSize: 24,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           headlineLarge: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.bold,
             fontSize: 22,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           headlineMedium: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           headlineSmall: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.bold,
             fontSize: 18,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           titleLarge: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.bold,
             fontSize: 16,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           titleMedium: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.w500,
             fontSize: 14,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           titleSmall: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.w500,
             fontSize: 12,
-            color: Color(0xFF6B7280),
+            color: AppColors.textSecondary,
           ),
           bodyLarge: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.normal,
             fontSize: 16,
-            color: Color(0xFF111827),
+            color: AppColors.textPrimary,
           ),
           bodyMedium: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.normal,
             fontSize: 14,
-            color: Color(0xFF6B7280),
+            color: AppColors.textSecondary,
           ),
           bodySmall: TextStyle(
             fontFamily: 'Iranyekan',
             fontWeight: FontWeight.normal,
             fontSize: 12,
-            color: Color(0xFF9CA3AF),
+            color: AppColors.textMuted,
           ),
         ),
       ),
@@ -150,7 +156,8 @@ class MyApp extends StatelessWidget {
         Locale('en', 'US'), // English US
       ],
       locale: const Locale('fa', 'IR'),
-      home: const Home(),
+      navigatorKey: navigatorKey,
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
