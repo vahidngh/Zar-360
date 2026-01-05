@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:convert';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -12,6 +14,7 @@ import '../services/storage_service.dart';
 import '../widgets/app_loading_widget.dart';
 import '../utils/tax_id_generator.dart';
 import '../utils/error_handler.dart';
+import '../utils/app_config.dart';
 import 'package:intl/intl.dart';
 
 class InvoiceDetailPage extends StatefulWidget {
@@ -35,12 +38,14 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
   final GlobalKey _printKey = GlobalKey();
   String? _sellerName;
   String? _sellerMobile;
-
+  String deviceBrand = "";
+  String deviceModel = "";
   @override
   void initState() {
     super.initState();
     _loadSellerInfo();
     _loadInvoiceDetails();
+    _getDeviceInfo();
   }
 
   Future<void> _loadSellerInfo() async {
@@ -146,7 +151,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
 
   Future<void> _printInvoice() async {
     try {
-      await Future.delayed(const Duration(seconds: 1));
+      // await Future.delayed(const Duration(seconds: 1));
       // Capture widget as bitmap
       final RenderRepaintBoundary boundary =
           _printKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
@@ -272,275 +277,208 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                       padding: const EdgeInsets.all(16),
                       child: RepaintBoundary(
                         key: _printKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                          // لوگو
-                          const SizedBox(height: 6),
-                          Center(
-                            child: ColorFiltered(
-                              colorFilter: const ColorFilter.mode(
-                                Colors.black,
-                                BlendMode.srcIn,
-                              ),
-                              child: Image.asset(
-                                'assets/images/maaher.png',
-                                height: 80,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          // هدر فاکتور
-                          const Center(
-                            child: Text(
-                              'فاکتور فروش',
-                              style: TextStyle(
-                                fontFamily: 'Iranyekan',
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                letterSpacing: 1.5,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          // شماره مالیاتی
-                          Center(
-                            child: Text(
-                              _getTaxId(),
-                              style: const TextStyle(
-                                fontFamily: 'Tahoma',
-                                fontSize: 18,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          // اطلاعات فروشنده
-                          if (_sellerName != null || _sellerMobile != null) ...[
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 6),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black, width: 2),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  // عنوان کادر
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                                    decoration: const BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(6),
-                                        topRight: Radius.circular(6),
-                                      ),
-                                    ),
-                                    child: const Text(
-                                      'اطلاعات فروشنده',
-                                      style: TextStyle(
-                                        fontFamily: 'Iranyekan',
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child:  Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                _sellerName ?? '-',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Iranyekan',
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w800,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                            // لوگو
+                            const SizedBox(height: 6),
+                            Center(
+                              child: ColorFiltered(
+                                colorFilter: const ColorFilter.mode(
+                                  Colors.black,
+                                  BlendMode.srcIn,
+                                ),
+                                child: Column(
+                                  children: [
+                                    if (AppConfig.app == App.maaher)
+                                      Center(
+                                        child: Image.asset(
+                                          AppConfig.getLogoPath(),
+                                          width: 150,
+                                          height: 150,
+                                          fit: BoxFit.contain,
                                         ),
-                                        // شماره موبایل (سمت چپ)
-                                        Expanded(
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                _sellerMobile ?? '-',
-                                                style: const TextStyle(
-                                                  fontFamily: 'Iranyekan',
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w800,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                      ),
+
+                                    if (AppConfig.app == App.zar360)
+                                      Center(
+                                        child: Image.asset(
+                                          AppConfig.getLogoPath(),
+                                          width: 190,
+                                          fit: BoxFit.contain,
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            // هدر فاکتور
+                            const Center(
+                              child: Text(
+                                'فاکتور فروش',
+                                style: TextStyle(
+                                  fontFamily: 'Iranyekan',
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            // شماره مالیاتی
+                            Center(
+                              child: Text(
+                                _getTaxId(),
+                                style: const TextStyle(
+                                  fontFamily: 'Tahoma',
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 6),
-                          ],
-                          const Divider(color: Colors.black, thickness: 2),
-                          const SizedBox(height: 6),
-
-                          // شماره فاکتور
-                          if (_invoiceData!['seller_invoice_number'] != null &&
-                              _invoiceData!['seller_invoice_number'].toString().isNotEmpty)
-                            _buildInfoRow('شماره فاکتور:', _getStringValue(_invoiceData!['seller_invoice_number'])),
-
-                          // تاریخ
-                          _buildInfoRow('تاریخ:', _getStringValue(_invoiceData!['issued_at'])),
-
-                          // نوع فاکتور
-                          _buildInfoRow('نوع فاکتور:', _invoiceData!['type_label']),
-
-                          // شماره مالیاتی
-                          if (_invoiceData!['tax'] != null &&
-                              _invoiceData!['tax'] is Map<String, dynamic> &&
-                              (_invoiceData!['tax'] as Map<String, dynamic>)['maher_tax_id'] != null)
-                            _buildInfoRow('شماره مالیاتی:', _getStringValue((_invoiceData!['tax'] as Map<String, dynamic>)['maher_tax_id'])),
-
-                          // وضعیت پرداخت
-                          _buildInfoRow('وضعیت پرداخت:', _invoiceData!['status_label']),
-
-                          // وضعیت ارسال به دارایی
-                          if (_invoiceData!['tax'] != null &&
-                              _invoiceData!['tax'] is Map<String, dynamic> &&
-                              (_invoiceData!['tax'] as Map<String, dynamic>)['app_status_label'] != null)
-                            _buildInfoRow('ارسال به دارایی:', _getStringValue((_invoiceData!['tax'] as Map<String, dynamic>)['app_status_label'])),
-
-                          // اطلاعات مشتری
-                          ..._buildCustomerInfo(),
-
-                          const SizedBox(height: 20),
-
-                          // لیست محصولات
-                          const Text(
-                            'محصولات',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Iranyekan',
-                              fontSize: 22,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          const Divider(color: Colors.black, thickness: 2),
-                          const SizedBox(height: 4),
-                          if (_invoiceData!['invoice_items'] != null &&
-                              _invoiceData!['invoice_items'] is List)
-                            ...(_invoiceData!['invoice_items'] as List).map((item) {
-                              return _buildInvoiceItem(item);
-                            }),
-
-                          const SizedBox(height: 6),
-                          const Divider(color: Colors.black, thickness: 2),
-                          const SizedBox(height: 6),
-
-                          // مبالغ
-                          Container(
-                            margin: const EdgeInsets.only(bottom: 6),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black, width: 2),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                // عنوان کادر
-                                Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(6),
-                                      topRight: Radius.circular(6),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'خلاصه مبالغ',
-                                    style: TextStyle(
-                                      fontFamily: 'Iranyekan',
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
+                            // اطلاعات فروشنده
+                            if (_sellerName != null || _sellerMobile != null) ...[
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 6),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black, width: 2),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: [
-                                      _buildInfoRow(
-                                        'جمع کل:',
-                                        '${_format((_invoiceData!['total_amount'] as num?)?.toDouble() ?? 0)} ریال',
-                                        isBold: true,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    // عنوان کادر
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(6),
+                                          topRight: Radius.circular(6),
+                                        ),
                                       ),
-                                      if (_invoiceData!['paid_amount'] != null)
-                                        _buildInfoRow(
-                                          'مبلغ پرداخت شده:',
-                                          '${_format((_invoiceData!['paid_amount'] as num).toDouble())} ریال',
+                                      child: const Text(
+                                        'اطلاعات فروشنده',
+                                        style: TextStyle(
+                                          fontFamily: 'Iranyekan',
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
                                         ),
-                                      if (_invoiceData!['remaining_amount'] != null)
-                                        _buildInfoRow(
-                                          'مبلغ باقیمانده:',
-                                          '${_format((_invoiceData!['remaining_amount'] as num).toDouble())} ریال',
-                                        ),
-                                      if (_invoiceData!['total_wage'] != null)
-                                        _buildInfoRow(
-                                          'اجرت:',
-                                          '${_format((_invoiceData!['total_wage'] as num).toDouble())} ریال',
-                                        ),
-                                      if (_invoiceData!['total_profit'] != null)
-                                        _buildInfoRow(
-                                          'سود:',
-                                          '${_format((_invoiceData!['total_profit'] as num).toDouble())} ریال',
-                                        ),
-                                      if (_invoiceData!['total_commission'] != null)
-                                        _buildInfoRow(
-                                          'حق العمل:',
-                                          '${_format((_invoiceData!['total_commission'] as num).toDouble())} ریال',
-                                        ),
-                                      if (_invoiceData!['total_tax'] != null)
-                                        _buildInfoRow(
-                                          'مالیات:',
-                                          '${_format((_invoiceData!['total_tax'] as num).toDouble())} ریال',
-                                        ),
-                                    ],
-                                  ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child:  Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  _sellerName ?? '-',
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Iranyekan',
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w800,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          // شماره موبایل (سمت چپ)
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  _sellerMobile ?? '-',
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Iranyekan',
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w800,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
+                              const SizedBox(height: 6),
+                            ],
+                            const Divider(color: Colors.black, thickness: 2),
+                            const SizedBox(height: 6),
+
+                            // شماره فاکتور
+                            if (_invoiceData!['seller_invoice_number'] != null &&
+                                _invoiceData!['seller_invoice_number'].toString().isNotEmpty)
+                              _buildInfoRow('شماره فاکتور:', _getStringValue(_invoiceData!['seller_invoice_number'])),
+
+                            // تاریخ
+                            _buildInfoRow('تاریخ:', _getStringValue(_invoiceData!['issued_at'])),
+
+                            // نوع فاکتور
+                            _buildInfoRow('نوع فاکتور:', _invoiceData!['type_label']),
+
+                            // شماره مالیاتی
+                            if (_invoiceData!['tax'] != null &&
+                                _invoiceData!['tax'] is Map<String, dynamic> &&
+                                (_invoiceData!['tax'] as Map<String, dynamic>)['maher_tax_id'] != null)
+                              _buildInfoRow('شماره مالیاتی:', _getStringValue((_invoiceData!['tax'] as Map<String, dynamic>)['maher_tax_id'])),
+
+                            // وضعیت پرداخت
+                            _buildInfoRow('وضعیت پرداخت:', _invoiceData!['status_label']),
+
+                            // وضعیت ارسال به دارایی
+                            if (_invoiceData!['tax'] != null &&
+                                _invoiceData!['tax'] is Map<String, dynamic> &&
+                                (_invoiceData!['tax'] as Map<String, dynamic>)['app_status_label'] != null)
+                              _buildInfoRow('ارسال به دارایی:', _getStringValue((_invoiceData!['tax'] as Map<String, dynamic>)['app_status_label'])),
+
+                            // اطلاعات مشتری
+                            ..._buildCustomerInfo(),
+
+                            const SizedBox(height: 20),
+
+                            // لیست محصولات
+                            const Text(
+                              'محصولات',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Iranyekan',
+                                fontSize: 22,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.black,
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 4),
+                            const Divider(color: Colors.black, thickness: 2),
+                            const SizedBox(height: 4),
+                            if (_invoiceData!['invoice_items'] != null &&
+                                _invoiceData!['invoice_items'] is List)
+                              ...(_invoiceData!['invoice_items'] as List).map((item) {
+                                return _buildInvoiceItem(item);
+                              }),
 
-                          const SizedBox(height: 6),
-
-                          // پرداخت‌ها
-                          if (_invoiceData!['payments'] != null &&
-                              _invoiceData!['payments'] is List &&
-                              (_invoiceData!['payments'] as List).isNotEmpty) ...[
                             const SizedBox(height: 6),
                             const Divider(color: Colors.black, thickness: 2),
                             const SizedBox(height: 6),
+
+                            // مبالغ
                             Container(
                               margin: const EdgeInsets.only(bottom: 6),
                               decoration: BoxDecoration(
@@ -561,7 +499,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                       ),
                                     ),
                                     child: const Text(
-                                      'پرداخت‌ها',
+                                      'خلاصه مبالغ',
                                       style: TextStyle(
                                         fontFamily: 'Iranyekan',
                                         fontSize: 20,
@@ -576,62 +514,182 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
-                                        ...(_invoiceData!['payments'] as List).asMap().entries.map((entry) {
-                                          final index = entry.key;
-                                          final payment = entry.value;
-                                          return _buildPaymentItem(index, payment);
-                                        }),
+                                        _buildInfoRow(
+                                          'جمع کل:',
+                                          '${_format((_invoiceData!['total_amount'] as num?)?.toDouble() ?? 0)} ریال',
+                                          isBold: true,
+                                        ),
+                                        if (_invoiceData!['paid_amount'] != null)
+                                          _buildInfoRow(
+                                            'مبلغ پرداخت شده:',
+                                            '${_format((_invoiceData!['paid_amount'] as num).toDouble())} ریال',
+                                          ),
+                                        if (_invoiceData!['remaining_amount'] != null)
+                                          _buildInfoRow(
+                                            'مبلغ باقیمانده:',
+                                            '${_format((_invoiceData!['remaining_amount'] as num).toDouble())} ریال',
+                                          ),
+                                        if (_invoiceData!['total_wage'] != null)
+                                          _buildInfoRow(
+                                            'اجرت:',
+                                            '${_format((_invoiceData!['total_wage'] as num).toDouble())} ریال',
+                                          ),
+                                        if (_invoiceData!['total_profit'] != null)
+                                          _buildInfoRow(
+                                            'سود:',
+                                            '${_format((_invoiceData!['total_profit'] as num).toDouble())} ریال',
+                                          ),
+                                        if (_invoiceData!['total_commission'] != null)
+                                          _buildInfoRow(
+                                            'حق العمل:',
+                                            '${_format((_invoiceData!['total_commission'] as num).toDouble())} ریال',
+                                          ),
+                                        if (_invoiceData!['total_tax'] != null)
+                                          _buildInfoRow(
+                                            'مالیات:',
+                                            '${_format((_invoiceData!['total_tax'] as num).toDouble())} ریال',
+                                          ),
                                       ],
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ],
 
-                          const SizedBox(height: 6),
-                          const Divider(color: Colors.black, thickness: 2),
-                          const SizedBox(height: 6),
-                          // پاورقی
-                          const Center(
-                            child: Text(
-                              'با تشکر از خرید شما',
-                              style: TextStyle(
-                                fontFamily: 'Iranyekan',
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                                color: Colors.black,
+                            const SizedBox(height: 6),
+
+                            // پرداخت‌ها
+                            if (_invoiceData!['payments'] != null &&
+                                _invoiceData!['payments'] is List &&
+                                (_invoiceData!['payments'] as List).isNotEmpty) ...[
+                              const SizedBox(height: 6),
+                              const Divider(color: Colors.black, thickness: 2),
+                              const SizedBox(height: 6),
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 6),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black, width: 2),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    // عنوان کادر
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(6),
+                                          topRight: Radius.circular(6),
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        'پرداخت‌ها',
+                                        style: TextStyle(
+                                          fontFamily: 'Iranyekan',
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: [
+                                          ...(_invoiceData!['payments'] as List).asMap().entries.map((entry) {
+                                            final index = entry.key;
+                                            final payment = entry.value;
+                                            return _buildPaymentItem(index, payment);
+                                          }),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+
+                            const SizedBox(height: 6),
+                            const Divider(color: Colors.black, thickness: 2),
+                            const SizedBox(height: 6),
+                            // پاورقی
+                            const Center(
+                              child: Text(
+                                'با تشکر از خرید شما',
+                                style: TextStyle(
+                                  fontFamily: 'Iranyekan',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
+                              if(deviceBrand == "Urovo" && deviceModel == "i9100/W")
+                                SizedBox(height: 150,),
+                          ],
                           ),
-                        ],
                         ),
                       ),
                     ),
     );
   }
 
+  Future<void> _getDeviceInfo() async {
+    try {
+      final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        setState(() {
+          deviceBrand = androidInfo.brand;
+          deviceModel = androidInfo.model;
+        });
+        debugPrint("deviceBrand $deviceBrand deviceModel $deviceModel");
+      }
+    } catch (e) {
+      // در صورت خطا، مقادیر پیش‌فرض باقی می‌مانند
+    }
+  }
+
   Widget _buildInfoRow(String label, String value, {bool isBold = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 3),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontFamily: 'Iranyekan',
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+    return Directionality(
+      textDirection: ui.TextDirection.rtl,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 3),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              label,
+              style: const TextStyle(
+                fontFamily: 'Iranyekan',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
-          ),
-          Expanded(
-            child: (value.length>20)?FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Directionality(
-              textDirection: ui.TextDirection.ltr,
+            Expanded(
+              child: (value.length>20)?FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Directionality(
+                textDirection: ui.TextDirection.ltr,
+                  child: Text(
+                    value,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: 'Iranyekan',
+                      fontSize: 18,
+                      fontWeight: isBold ? FontWeight.bold : FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              ):Directionality(
+                textDirection: ui.TextDirection.ltr,
                 child: Text(
                   value,
                   textAlign: TextAlign.left,
@@ -642,22 +700,10 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                     color: Colors.black,
                   ),
                 ),
-              )
-            ):Directionality(
-              textDirection: ui.TextDirection.ltr,
-              child: Text(
-                value,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontFamily: 'Iranyekan',
-                  fontSize: 18,
-                  fontWeight: isBold ? FontWeight.bold : FontWeight.bold,
-                  color: Colors.black,
-                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

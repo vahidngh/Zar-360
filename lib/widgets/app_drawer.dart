@@ -6,6 +6,7 @@ import '../services/storage_service.dart';
 import '../services/auth_service.dart';
 import '../services/database_service.dart';
 import '../viewmodels/cart_viewmodel.dart';
+import '../utils/app_config.dart';
 import '../pages/login_page.dart';
 import '../pages/product_management_page.dart';
 import '../pages/notifications_page.dart';
@@ -17,6 +18,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: 270,
       backgroundColor: Colors.white,
       child: Column(
         children: [
@@ -47,11 +49,60 @@ class AppDrawer extends StatelessWidget {
                           Expanded(
                             child: Align(
                               alignment: Alignment.centerRight,
-                              child: Image.asset(
-                                'assets/images/maaher.png',
-                                height: 55,
-                                fit: BoxFit.contain,
+                              child:
+
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+
+
+                                  if (AppConfig.app == App.maaher)
+                                    Center(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Container(
+                                          color: Colors.white,
+                                          child: Image.asset(
+                                            AppConfig.getLogoPath(),
+                                            width: 55,
+                                            height: 55,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                  if (AppConfig.app == App.zar360)
+                                    Center(
+                                      child: Image.asset(
+                                        AppConfig.getLogoPath(),
+                                        width: 190,
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+
+                                  if(AppConfig.showIrankishLogo)
+                                    Center(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Container(
+                                          color: Colors.white,
+                                          child: Image.asset(
+                                            "assets/images/irankish.png",
+                                            width: 55,
+                                            height: 55,
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                ],
                               ),
+
+
+
                             ),
                           ),
                           // Container(

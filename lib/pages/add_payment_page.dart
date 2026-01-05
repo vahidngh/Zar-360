@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -33,6 +34,13 @@ class AddPaymentPage extends StatefulWidget {
 }
 
 class _AddPaymentPageState extends State<AddPaymentPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    _getDeviceManufacturer();
+  }
+
   String? selectedType;
   final amountController = TextEditingController();
   final weightController = TextEditingController(); // برای پرداخت با طلا
@@ -51,17 +59,10 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
 
   // دریافت اطلاعات دستگاه برای بررسی سازنده
   Future<String?> _getDeviceManufacturer() async {
-    const platform = MethodChannel('my_channel');
-    try {
-      final String? deviceInfoJson = await platform.invokeMethod('getDeviceInfo');
-      if (deviceInfoJson != null) {
-        final Map<String, dynamic> deviceInfo = jsonDecode(deviceInfoJson);
-        return deviceInfo['brand'] as String?;
-      }
-    } catch (e) {
-      debugPrint('خطا در دریافت اطلاعات دستگاه: $e');
-    }
-    return null;
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    final AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    debugPrint(androidInfo.brand);
+    return androidInfo.brand;
   }
 
   @override
@@ -562,7 +563,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
 
     // بررسی سازنده دستگاه برای نمایش متن مناسب در دیالوگ
     final deviceManufacturer = await _getDeviceManufacturer();
-    final isKozenDevice = deviceManufacturer != null && deviceManufacturer == 'Kozen';
+    final isPosDevice = deviceManufacturer != null && (deviceManufacturer == 'Urovo' || deviceManufacturer == 'Kozen' );
 
     // نمایش دیالوگ تایید قبل از اضافه کردن پرداخت
     String typeLabel;
@@ -656,7 +657,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
                 ),
               ),
             ],
-            if (selectedType == 'card' && isKozenDevice) ...[
+            if (selectedType == 'card' && isPosDevice) ...[
               const SizedBox(height: 8),
               const Text(
                 'پس از تایید، به صفحه پرداخت کارتی منتقل خواهید شد.',
@@ -787,7 +788,7 @@ class _AddPaymentPageState extends State<AddPaymentPage> {
       if (selectedType == 'card') {
         // استفاده از همان متغیر deviceManufacturer که قبلاً برای دیالوگ دریافت کردیم
         // اگر سازنده دستگاه "Kozen" است، از کانال کاتلین استفاده کن
-        if (isKozenDevice) {
+        if (isPosDevice) {
           final result = await pay(
             context: context,
             amount: roundedAmount.toString(),

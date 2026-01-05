@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zar360/theme/app_theme.dart';
 import '../viewmodels/login_viewmodel.dart';
 import '../widgets/app_loading_widget.dart';
+import '../utils/app_config.dart';
 import 'otp_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -56,16 +57,26 @@ class _LoginPageContent extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            // Logo
-                            Center(
-                              child: Image.asset(
-                                // 'assets/images/zar360.png',
-                                'assets/images/maaher.png',
-                                width: 190,
-                                fit: BoxFit.contain,
+                            if (AppConfig.app == App.maaher)
+                              Center(
+                                child: Image.asset(
+                                  AppConfig.getLogoPath(),
+                                  width: 150,
+                                  height: 150,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 24),
+
+                            if (AppConfig.app == App.zar360)
+                              Center(
+                                child: Image.asset(
+                                  AppConfig.getLogoPath(),
+                                  width: 190,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+
+                            const SizedBox(height: 10),
                             // Title
                             const Text(
                               'ورود',
@@ -78,7 +89,7 @@ class _LoginPageContent extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 32),
-                            
+
                             // Mobile Input
                             Container(
                               decoration: BoxDecoration(
@@ -120,7 +131,7 @@ class _LoginPageContent extends StatelessWidget {
                                 },
                               ),
                             ),
-                            
+
                             // Error Message
                             if (viewModel.errorMessage != null) ...[
                               const SizedBox(height: 12),
@@ -134,9 +145,9 @@ class _LoginPageContent extends StatelessWidget {
                                 ),
                               ),
                             ],
-                            
+
                             const SizedBox(height: 24),
-                            
+
                             // Login Button
                             SizedBox(
                               height: 56,
@@ -206,4 +217,3 @@ class _LoginPageContent extends StatelessWidget {
     );
   }
 }
-

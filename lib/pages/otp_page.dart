@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:zar360/theme/app_theme.dart';
 import '../viewmodels/otp_viewmodel.dart';
 import '../widgets/app_loading_widget.dart';
+import '../utils/app_config.dart';
 import 'main_navigation_page.dart';
 
 class OtpPage extends StatelessWidget {
@@ -105,13 +106,24 @@ class _OtpPageContentState extends State<_OtpPageContent> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             // Logo
-                            Center(
-                              child: Image.asset(
-                                'assets/images/maaher.png',
-                                width: 190,
-                                fit: BoxFit.contain,
+                            if (AppConfig.app == App.maaher)
+                              Center(
+                                child: Image.asset(
+                                  AppConfig.getLogoPath(),
+                                  width: 150,
+                                  height: 150,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
-                            ),
+
+                            if (AppConfig.app == App.zar360)
+                              Center(
+                                child: Image.asset(
+                                  AppConfig.getLogoPath(),
+                                  width: 190,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
                             const SizedBox(height: 24),
                             // Title
                             const Text(

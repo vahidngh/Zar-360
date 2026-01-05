@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zar360/theme/app_theme.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../services/storage_service.dart';
+import '../utils/app_config.dart';
 import 'login_page.dart';
 import 'main_navigation_page.dart';
 
@@ -57,9 +58,9 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // لوگو zar360
+            // لوگو
             Image.asset(
-              'assets/images/maaher.png',
+              AppConfig.getLogoPath(),
               width: 150,
               height: 150,
               fit: BoxFit.contain,

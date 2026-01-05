@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../viewmodels/cart_viewmodel.dart';
@@ -10,6 +11,7 @@ import '../services/invoice_service.dart';
 import '../utils/tax_id_generator.dart';
 import '../utils/error_handler.dart';
 import 'add_payment_page.dart';
+import 'dart:ui' as ui;
 
 enum CustomerType {
   individual, // حقیقی
@@ -1710,13 +1712,28 @@ class _PaymentPageState extends State<PaymentPage> {
                   if (record.details['card_number'] != null && record.details['card_number'].toString().isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
-                      child: Text(
-                        'شماره کارت: ${record.details['card_number']}',
-                        style: const TextStyle(
-                          fontFamily: 'Iranyekan',
-                          fontSize: 11,
-                          color: AppColors.textMuted,
-                        ),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'شماره کارت: ',
+                            style: TextStyle(
+                              fontFamily: 'Iranyekan',
+                              fontSize: 11,
+                              color: AppColors.textMuted,
+                            ),
+                          ),
+                          Directionality(
+                            textDirection: ui.TextDirection.ltr,
+                            child: Text(
+                              record.details['card_number'],
+                              style: const TextStyle(
+                                fontFamily: 'Iranyekan',
+                                fontSize: 11,
+                                color: AppColors.textMuted,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                 ],

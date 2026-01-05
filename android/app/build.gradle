@@ -63,6 +63,9 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
         }
     }
@@ -74,5 +77,8 @@ flutter {
 
 dependencies {
     implementation files('libs/classes-2.1.17.jar')
+    //irankish i9100
+    implementation files('libs/externalpayment_0.1.5.aar')
+    implementation files('libs/urovi_i9100_platform_sdk_v4.1.0326.jar')
 }
 
